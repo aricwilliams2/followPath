@@ -1,0 +1,26 @@
+{
+  "name": "follow-the-path-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "setup-db": "node scripts/setup-db.js",
+    "seed": "node scripts/seed.js",
+    "test:integration": "node scripts/integration-test.mjs",
+    "test:password-reset": "node scripts/test-password-reset.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.11.0",
+    "uuid": "^11.0.0"
+  }
+}
