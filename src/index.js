@@ -290,7 +290,23 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: 'SERVER_ERROR', message: err.message });
 });
 
+function assertDatabaseConfig() {
+  const host = process.env.DB_HOST || '127.0.0.1';
+  const isLocal = host === '127.0.0.1' || host === 'localhost';
+  if (process.env.RENDER && isLocal) {
+    console.error(
+      'Database not configured for Render. In the Render dashboard → Environment, set:\n' +
+        '  DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME\n' +
+        '(from TiDB Cloud, db4free, etc. — not 127.0.0.1)\n' +
+        '  DB_SSL=true if your host requires SSL\n' +
+        'Then run npm run setup-db locally once against that database.'
+    );
+    process.exit(1);
+  }
+}
+
 async function main() {
+  assertDatabaseConfig();
   await ensureSchema();
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Follow the Path API listening on port ${PORT}`);
